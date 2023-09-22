@@ -1,0 +1,94 @@
+<%- include("partials/header.ejs") %>
+
+<div class="container">
+
+  <div class="row justify-content-md-center">
+    
+    <div class="col-md-auto">
+      <h1 class="list-title" style="text-align: center;">
+        <%= title %>
+      </h1>
+      <% if (title === "Today"){ %>
+        <h2 style="text-align: center;">
+          <%= locals.date %>
+        </h2>
+      <% } %>
+    </div>
+
+  </div>
+
+</div>
+    
+
+<div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-3 align-items-center justify-content-center">
+  <div class="list-group">
+
+    <% for(var i = 0; i<locals.list.length ; i++){ %>
+    <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <form action="/check/<%= title %>" method="POST">
+        <label class="d-flex gap-3">
+          <!-- https://stackoverflow.com/questions/43267778/how-to-submit-multiple-values-in-a-single-html-form -->
+          <% if (list[i].check === true) {%>
+            <input id="<%= i %>" class="form-check-input flex-shrink-0" checked type="checkbox" name="checkbox" style="font-size: 1.375em;" onChange="this.form.submit()">
+          <% } else { %>
+            <input id="<%= i %>" class="form-check-input flex-shrink-0" type="checkbox" name="checkbox" style="font-size: 1.375em;" onChange="this.form.submit()">
+          <% } %> 
+          <input type="hidden" name="id_task" value="<%= list[i]._id %>">
+          <span class="pt-1 form-checked-content">
+            <% if (list[i].check === true) { %>
+            <strong class="checked_item">
+            <% } else { %>
+            <strong>
+            <% } %> 
+              <%= list[i].description %>
+            </strong>
+            <!-- <small class="d-block text-body-secondary">
+              <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"></use></svg>
+              1:00–2:00pm
+            </small> -->
+          </span>
+        </label>
+      </form>
+      <% if (list[i].check === true) {%>
+        <form action="/delete/<%= title %>" method="POST">
+          <input type="hidden" name="id_task" value="<%= list[i]._id %>">
+          <button type="submit" class="delete-button">✖️</button>
+        </form>
+      <% } %>
+    </div>
+    <% } %>
+
+    <!-- Form to add a new Task -->
+    <div class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+      <form class="row g-3" action="/add/<%= title %>" method="POST">
+        <div class="col-auto">
+          <input class="form-control" id="new_task" placeholder="New Task" name="fTask">
+        </div>
+        <div class="col-auto" style="margin-top: 10.5px;">
+          <!-- I don't know why, but in this part when I put the image in the folder "img" the app doesn't render it -->
+          <!-- <button type="submit" class="my-button"><img src="img/add_symbol.jpg" height="30px"></button> -->
+          <button type="submit" class="my-button"><img src="https://www.svgrepo.com/show/2825/add-symbol.svg" height="30px"></button>
+        </div>
+      </form>
+    </div>
+
+    
+  </div>
+</div>
+
+<!-- Form to add a new brand list -->
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-auto">
+      <form action="/newList" method="POST">
+        <div class="mb-3">
+          <label class="form-label"><strong>New List</strong></label>
+          <input type="text" class="form-control" name="Lname">
+        </div>
+        <button type="submit" class="btn btn-primary list-title">Create</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include("partials/footer.ejs") %>

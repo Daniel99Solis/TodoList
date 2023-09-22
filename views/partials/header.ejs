@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/sass/main.css" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/main.css">
+  <title>To Do List</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <img class="icon-img" src="/img/to_do_icon.png">
+        <span class="fs-4">To Do List</span>
+      </a>
+
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      </ul>
+
+      <div class="col-md-3 text-end">
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle list-title" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 200px;font-size: large;">
+            Select a List
+          </button>
+          <ul class="dropdown-menu">
+            <% names.forEach(name => { %>
+              <li><a class="dropdown-item" href="/list/<%= name  %>"><%= name %></a></li>
+            <% }); %>
+          </ul>
+        </div>
+      </div>
+    </header>
+  </div>
